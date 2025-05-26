@@ -22,7 +22,7 @@ jobs:
 
           pip install --upgrade pip setuptools wheel
 
-          pip install PyGObject==3.51.0
+          pip install PyGObject==3.50.1
 
       - name: Package Application with PyInstaller
         run: |
