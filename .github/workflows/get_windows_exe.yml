@@ -22,7 +22,7 @@ jobs:
 
           pip install PyCairo
 
-          pip install PyGObject==3.49.0
+          pip install PyGObject==3.48.2
 
       - name: Package Application with PyInstaller
         run: |
