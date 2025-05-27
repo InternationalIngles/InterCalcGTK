@@ -140,6 +140,7 @@ class Calculator(Gtk.ApplicationWindow):
 
         main_box.append(self.entry)
 
+        # Button Grid
         grid = Gtk.Grid(row_spacing=5, column_spacing=5)
         grid.set_row_homogeneous(True)
         grid.set_column_homogeneous(True)
@@ -155,26 +156,32 @@ class Calculator(Gtk.ApplicationWindow):
 
         row = 0
         col = 0
-        for label, callback in buttons:
+        for idx, (label, callback) in enumerate(buttons):
             svg_path = self.get_icon_filename(label)
             button = SvgButton(svg_path, label, callback)
-
             button.set_hexpand(True)
             button.set_vexpand(True)
             button.set_halign(Gtk.Align.FILL)
             button.set_valign(Gtk.Align.FILL)
-
             grid.attach(button, col, row, 1, 1)
+            # Track the position of the plus button
+            if label == "+":
+                plus_row = row
+                plus_col = col
             col += 1
             if col > 3:
                 col = 0
                 row += 1
 
-        # SVG Logo at bottom right
-        logo = SvgLogo(os.path.join(ICONS_DIR, "logo.svg"), size=100)
-        logo.set_halign(Gtk.Align.END)
-        logo.set_valign(Gtk.Align.END)
-        main_box.append(logo)
+        # Logo
+        logo = SvgLogo(os.path.join(ICONS_DIR, "logo.svg"), size=80)
+        logo.set_halign(Gtk.Align.CENTER)
+        logo.set_valign(Gtk.Align.CENTER)
+        logo.set_margin_start(10)
+        logo.set_margin_end(10)
+        logo.set_margin_top(5)
+        logo.set_margin_bottom(5)
+        grid.attach(logo, plus_col, plus_row + 1, 1, 1)
 
     def get_icon_filename(self, label):
         label_map = {
