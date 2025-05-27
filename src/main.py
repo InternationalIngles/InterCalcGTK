@@ -5,7 +5,10 @@ from gi.repository import Gtk, Gio, Rsvg, Pango
 
 import os
 
-# SVG Button
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ICONS_DIR = os.path.join(BASE_DIR, "icons")
+
+# Button
 class SvgButton(Gtk.Button):
     def __init__(self, svg_path, label_value, callback):
         super().__init__()
@@ -13,8 +16,8 @@ class SvgButton(Gtk.Button):
         self.label_value = label_value
 
         self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_content_width(50)
-        self.drawing_area.set_content_height(50)
+        self.drawing_area.set_content_width(70)
+        self.drawing_area.set_content_height(70)
         self.drawing_area.set_draw_func(self.on_draw)
 
         self.set_child(self.drawing_area)
@@ -72,15 +75,15 @@ class Calculator(Gtk.ApplicationWindow):
     def __init__(self, app):
         super().__init__(application=app)
         self.set_title("InterCalc")
-        self.set_default_size(350, 500)
+        self.set_default_size(250, 300)
 
         self.dark_mode = False
 
-        # HeaderBar with hamburger
+        # HeaderBar
         header = Gtk.HeaderBar()
         header.set_title_widget(Gtk.Label(label="InterCalc"))
         self.set_titlebar(header)
-
+        #Hamburguer Menu
         menu_button = Gtk.MenuButton()
         icon = Gtk.Image.new_from_icon_name("open-menu-symbolic")
         menu_button.set_child(icon)
@@ -124,7 +127,7 @@ class Calculator(Gtk.ApplicationWindow):
         self.entry.set_margin_bottom(10)
         self.entry.set_size_request(-1, 60)
 
-        # Apply Inter font to the result screen
+        # Result screen
         context = self.entry.get_style_context()
         css_provider = Gtk.CssProvider()
         css_provider.load_from_data(b'''
@@ -146,7 +149,7 @@ class Calculator(Gtk.ApplicationWindow):
             ("7", self.on_button_clicked), ("8", self.on_button_clicked), ("9", self.on_button_clicked), ("/", self.on_button_clicked),
             ("4", self.on_button_clicked), ("5", self.on_button_clicked), ("6", self.on_button_clicked), ("*", self.on_button_clicked),
             ("1", self.on_button_clicked), ("2", self.on_button_clicked), ("3", self.on_button_clicked), ("-", self.on_button_clicked),
-            ("0", self.on_button_clicked), (".", self.on_button_clicked), ("=", self.on_equal_clicked), ("+", self.on_button_clicked),
+            (".", self.on_button_clicked), ("0", self.on_button_clicked), ("=", self.on_equal_clicked), ("+", self.on_button_clicked),
             ("C", self.on_clear_clicked),
         ]
 
@@ -168,7 +171,7 @@ class Calculator(Gtk.ApplicationWindow):
                 row += 1
 
         # SVG Logo at bottom right
-        logo = SvgLogo("icons/logo.svg", size=65)
+        logo = SvgLogo(os.path.join(ICONS_DIR, "logo.svg"), size=100)
         logo.set_halign(Gtk.Align.END)
         logo.set_valign(Gtk.Align.END)
         main_box.append(logo)
@@ -179,7 +182,7 @@ class Calculator(Gtk.ApplicationWindow):
             "=": "equal", ".": "dot", "C": "clear"
         }
         name = label_map.get(label, label)
-        return os.path.join("icons", f"{name}.svg")
+        return os.path.join(ICONS_DIR, f"{name}.svg")
 
     def on_button_clicked(self, button):
         current = self.entry.get_text()
@@ -197,16 +200,17 @@ class Calculator(Gtk.ApplicationWindow):
         self.entry.set_text("")
     #About
     def on_about_clicked(self, button):
+        about = Gtk.HeaderBar()
+        about.set_title_widget(Gtk.Label(label="About"))
         about = Gtk.Dialog(title="About", transient_for=self, modal=True)
-        about.set_default_size(300, 300)
-        header = Gtk.HeaderBar()
-        header.set_title_widget(Gtk.Label(label="About"))
+        about.set_default_size(200, 300)
+
         
         content = about.get_content_area()
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10, margin_top=20, margin_bottom=20, margin_start=20, margin_end=20)
         content.append(vbox)
-        logo = SvgLogo("icons/logo.svg", size=150)  
+        logo = SvgLogo(os.path.join(ICONS_DIR, "logo.svg"), size=200)  
         logo.set_halign(Gtk.Align.CENTER)
         vbox.append(logo)
 
