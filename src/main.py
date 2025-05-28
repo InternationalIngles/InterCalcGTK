@@ -3,9 +3,14 @@ gi.require_version("Gtk", "4.0")
 gi.require_version('Rsvg', '2.0')
 from gi.repository import Gtk, Gio, Rsvg, Pango
 
+import sys
 import os
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if getattr(sys, 'frozen', False):
+    BASE_DIR = sys._MEIPASS
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 ICONS_DIR = os.path.join(BASE_DIR, "icons")
 
 # Button
@@ -70,7 +75,7 @@ class SvgLogo(Gtk.DrawingArea):
 
         handle.render_cairo(cr)
 
-# Calculator Window
+# Drawing the window
 class Calculator(Gtk.ApplicationWindow):
     def __init__(self, app):
         super().__init__(application=app)
@@ -106,7 +111,6 @@ class Calculator(Gtk.ApplicationWindow):
 
         header.pack_end(menu_button)
 
-        # Outer box with margin for aspect ratio
         outer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         outer_box.set_margin_start(20)
         outer_box.set_margin_end(20)
@@ -114,7 +118,7 @@ class Calculator(Gtk.ApplicationWindow):
         outer_box.set_margin_bottom(20)
         self.set_child(outer_box)
 
-        # Aspect preserving frame
+        # Done it to preserve aspect ratio
         frame = Gtk.AspectFrame(ratio=0.7, obey_child=False)
         outer_box.append(frame)
 
@@ -164,7 +168,6 @@ class Calculator(Gtk.ApplicationWindow):
             button.set_halign(Gtk.Align.FILL)
             button.set_valign(Gtk.Align.FILL)
             grid.attach(button, col, row, 1, 1)
-            # Track the position of the plus button
             if label == "+":
                 plus_row = row
                 plus_col = col
@@ -207,12 +210,10 @@ class Calculator(Gtk.ApplicationWindow):
         self.entry.set_text("")
     #About
     def on_about_clicked(self, button):
-        about = Gtk.HeaderBar()
-        about.set_title_widget(Gtk.Label(label="About"))
         about = Gtk.Dialog(title="About", transient_for=self, modal=True)
         about.set_default_size(200, 300)
+        about.set_decorated(True) 
 
-        
         content = about.get_content_area()
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10, margin_top=20, margin_bottom=20, margin_start=20, margin_end=20)
@@ -236,7 +237,6 @@ class Calculator(Gtk.ApplicationWindow):
         self.dark_mode = not self.dark_mode
         settings.set_property("gtk-application-prefer-dark-theme", self.dark_mode)
 
-# Application
 class CalculatorApp(Gtk.Application):
     def __init__(self):
         super().__init__(application_id="org.intertech.calculator")
