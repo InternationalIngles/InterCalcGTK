@@ -1,7 +1,7 @@
 import gi
 gi.require_version("Gtk", "4.0")
 gi.require_version('Rsvg', '2.0')
-from gi.repository import Gtk, Gio, Rsvg, Pango
+from gi.repository import Gtk, Gio, Rsvg, Pango, Gdk
 
 import sys
 import os
@@ -109,8 +109,6 @@ class Calculator(Gtk.ApplicationWindow):
 
         header.pack_start(menu_button)
 
-        header.pack_end(menu_button)
-
         outer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         outer_box.set_margin_start(20)
         outer_box.set_margin_end(20)
@@ -130,17 +128,20 @@ class Calculator(Gtk.ApplicationWindow):
         self.entry.set_vexpand(False)
         self.entry.set_margin_bottom(10)
         self.entry.set_size_request(-1, 60)
+        self.entry.add_css_class("calc-entry")
 
-        # Result screen
-        context = self.entry.get_style_context()
         css_provider = Gtk.CssProvider()
         css_provider.load_from_data(b'''
-            entry {
+            .calc-entry {
                 font-family: "Inter";
                 font-size: 60px;
             }
         ''')
-        context.add_provider(css_provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
+        Gtk.StyleContext.add_provider_for_display(
+            Gdk.Display.get_default(),
+            css_provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_USER
+        )
 
         main_box.append(self.entry)
 
@@ -212,13 +213,24 @@ class Calculator(Gtk.ApplicationWindow):
     def on_about_clicked(self, button):
         about = Gtk.Dialog(title="About", transient_for=self, modal=True)
         about.set_default_size(200, 300)
-        about.set_decorated(True) 
+        about.set_decorated(True)
+        header_bar = Gtk.HeaderBar()
+        header_bar.set_title_widget(Gtk.Label(label="About"))
+        header_bar.set_show_title_buttons(True)
+        about.set_titlebar(header_bar)
 
         content = about.get_content_area()
 
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10, margin_top=20, margin_bottom=20, margin_start=20, margin_end=20)
+        vbox = Gtk.Box(
+            orientation=Gtk.Orientation.VERTICAL,
+            spacing=10,
+            margin_top=20,
+            margin_bottom=20,
+            margin_start=20,
+            margin_end=20
+        )
         content.append(vbox)
-        logo = SvgLogo(os.path.join(ICONS_DIR, "logo.svg"), size=200)  
+        logo = SvgLogo(os.path.join(ICONS_DIR, "logo.svg"), size=200)
         logo.set_halign(Gtk.Align.CENTER)
         vbox.append(logo)
 
