@@ -1,7 +1,8 @@
 import gi
 gi.require_version("Gtk", "4.0")
+gi.require_version("Adw", "1")
 gi.require_version('Rsvg', '2.0')
-from gi.repository import Gtk, Gio, Rsvg, Pango, Gdk
+from gi.repository import Gtk, Gio, Rsvg, Pango, Gdk, Adw
 
 import sys
 import os
@@ -18,6 +19,7 @@ class SvgButton(Gtk.Button):
     def __init__(self, svg_path, label_value, callback):
         super().__init__()
         self.svg_path = svg_path
+        
         self.label_value = label_value
 
         self.drawing_area = Gtk.DrawingArea()
@@ -76,7 +78,7 @@ class SvgLogo(Gtk.DrawingArea):
         handle.render_cairo(cr)
 
 # Drawing the window
-class Calculator(Gtk.ApplicationWindow):
+class Calculator(Adw.ApplicationWindow):
     def __init__(self, app):
         super().__init__(application=app)
         self.set_title("InterCalc")
@@ -84,11 +86,15 @@ class Calculator(Gtk.ApplicationWindow):
 
         self.dark_mode = False
 
-        # HeaderBar
-        header = Gtk.HeaderBar()
+        # Main vertical box
+        outer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0) 
+        self.set_content(outer_box)
+
+        # HeaderBar as first child of the box
+        header = Adw.HeaderBar()
         header.set_title_widget(Gtk.Label(label="InterCalc"))
-        self.set_titlebar(header)
-        #Hamburguer Menu
+
+        # Hamburguer Menu
         menu_button = Gtk.MenuButton()
         icon = Gtk.Image.new_from_icon_name("open-menu-symbolic")
         menu_button.set_child(icon)
@@ -108,17 +114,19 @@ class Calculator(Gtk.ApplicationWindow):
         menu_button.set_popover(popover)
 
         header.pack_start(menu_button)
+        outer_box.append(header)
 
-        outer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        outer_box.set_margin_start(20)
-        outer_box.set_margin_end(20)
-        outer_box.set_margin_top(20)
-        outer_box.set_margin_bottom(20)
-        self.set_child(outer_box)
+        # Content box with margins
+        content_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        content_box.set_margin_start(20)
+        content_box.set_margin_end(20)
+        content_box.set_margin_top(20)
+        content_box.set_margin_bottom(20)
+        outer_box.append(content_box)
 
         # Done it to preserve aspect ratio
         frame = Gtk.AspectFrame(ratio=0.7, obey_child=False)
-        outer_box.append(frame)
+        content_box.append(frame)
 
         main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         frame.set_child(main_box)
@@ -214,9 +222,9 @@ class Calculator(Gtk.ApplicationWindow):
         about = Gtk.Dialog(title="About", transient_for=self, modal=True)
         about.set_default_size(200, 300)
         about.set_decorated(True)
-        header_bar = Gtk.HeaderBar()
+        header_bar = Adw.HeaderBar()
         header_bar.set_title_widget(Gtk.Label(label="About"))
-        header_bar.set_show_title_buttons(True)
+        header_bar.set_show_end_title_buttons(True)
         about.set_titlebar(header_bar)
 
         content = about.get_content_area()
@@ -245,11 +253,13 @@ class Calculator(Gtk.ApplicationWindow):
         about.show()
 
     def on_toggle_mode(self, button):
-        settings = Gtk.Settings.get_default()
+        style_manager = Adw.StyleManager.get_default()
         self.dark_mode = not self.dark_mode
-        settings.set_property("gtk-application-prefer-dark-theme", self.dark_mode)
+        style_manager.set_color_scheme(
+            Adw.ColorScheme.FORCE_DARK if self.dark_mode else Adw.ColorScheme.FORCE_LIGHT
+        )
 
-class CalculatorApp(Gtk.Application):
+class CalculatorApp(Adw.Application):
     def __init__(self):
         super().__init__(application_id="org.intertech.calculator")
 
