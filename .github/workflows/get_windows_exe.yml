@@ -1,4 +1,4 @@
-name: Build InterCalc (PyInstaller for Linux & Nuitka for Windows)
+name: Build InterCalc (PyInstaller & Nuitka)
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   pyinstaller-build:
-    if: github.ref == 'refs/heads/main'
+    if: startsWith(github.ref, 'refs/heads/main')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -22,10 +22,10 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y libcairo2-dev libgirepository-2.0-dev
+          sudo apt install -y libcairo2-dev libgirepository1.0-dev
           python -m pip install --upgrade pip
           pip install --upgrade pip setuptools wheel
-          pip install pyinstaller PyGObject
+          pip install pyinstaller PyGObject pycairo
 
       - name: Package Application with PyInstaller
         run: |
@@ -38,7 +38,7 @@ jobs:
           path: dist/*
 
   nuitka-qt-build:
-    if: github.ref == 'refs/heads/qtversion'
+    if: startsWith(github.ref, 'refs/heads/qtversion')
     runs-on: windows-latest
     steps:
       - name: Checkout repository
@@ -56,8 +56,7 @@ jobs:
 
       - name: Build with Nuitka
         run: |
-          nuitka --onefile --enable-plugin=pyside6 --windows-icon-from-ico=icons/logo.ico src/main.py
-
+          nuitka --onefile --enable-plugin=pyside6 --output-dir=dist src/main.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
