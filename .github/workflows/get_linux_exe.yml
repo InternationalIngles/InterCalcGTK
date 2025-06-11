@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - qtversion
 
 jobs:
   pyinstaller-build:
@@ -37,29 +36,3 @@ jobs:
           name: Linux-exe
           path: dist/*
 
-  nuitka-qt-build:
-    if: github.ref_name == 'qtversion'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install nuitka PySide6
-
-      - name: Build with Nuitka
-        run: |
-          nuitka --standalone --enable-plugin=pyside6 --output-dir=dist src/main.py
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: Qt-Linux-nuitka
-          path: dist/
