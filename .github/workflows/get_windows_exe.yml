@@ -21,7 +21,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt install libcairo2-dev
+          sudo apt update
+          sudo apt install libcairo2-dev
           python -m pip install --upgrade pip
           pip install --upgrade pip setuptools wheel
           pip install PyGObject
