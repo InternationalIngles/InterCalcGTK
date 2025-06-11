@@ -1,13 +1,16 @@
-name: Package Application with PyInstaller
+name: Build InterCalc (PyInstaller for Linux & Nuitka for Windows)
+
 on:
   push:
     branches:
       - main
+      - qtversion
+
 jobs:
-  build:
+  pyinstaller-build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -31,3 +34,31 @@ jobs:
         with:
           name: Linux-exe
           path: dist/*
+
+  nuitka-qt-build:
+    if: github.ref == 'refs/heads/qtversion'
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install nuitka PySide6
+
+      - name: Build with Nuitka
+        run: |
+          nuitka --onefile --enable-plugin=pyside6 --windows-icon-from-ico=icons/logo.ico src/main.py
+
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Qt-Linux-nuitka
+          path: dist/
