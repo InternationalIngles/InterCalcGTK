@@ -7,61 +7,59 @@
    viewBox="0 0 135.46665 135.46666"
    version="1.1"
    id="svg1"
-   inkscape:export-filename="multiply.png"
+   sodipodi:docname="multiply.svg.svg"
+   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
+   inkscape:export-filename="clear.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
-   sodipodi:docname="multiply.svg"
-   inkscape:version="1.4.2 (ebf0e940d0, 2025-05-08)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
      id="namedview1"
-     pagecolor="#505050"
-     bordercolor="#eeeeee"
-     borderopacity="1"
-     inkscape:showpageshadow="0"
-     inkscape:pageopacity="0"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#505050"
-     inkscape:document-units="px"
-     inkscape:zoom="0.47926126"
-     inkscape:cx="74.072334"
-     inkscape:cy="377.66457"
-     inkscape:window-width="1366"
-     inkscape:window-height="696"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.953125"
+     inkscape:cx="256"
+     inkscape:cy="256"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg1">
-    <inkscape:page
-       x="0"
-       y="0"
-       width="135.46664"
-       height="135.46666"
-       id="page2"
-       margin="0"
-       bleed="0" />
-  </sodipodi:namedview>
+     inkscape:current-layer="svg1" />
   <defs
      id="defs1">
     <linearGradient
-       id="swatch2"
-       inkscape:swatch="solid">
+       id="swatch2">
       <stop
          style="stop-color:#000000;stop-opacity:1;"
          offset="0"
          id="stop2" />
     </linearGradient>
   </defs>
-  <path
-     id="rect1"
+  <rect
      style="fill:#5e17eb;stroke-width:12.1708;stroke-linecap:round;paint-order:stroke fill markers"
-     d="M 1.7937708e-7,-7.3801864e-8 H 135.46666 V 135.46666 H 1.7937708e-7 Z" />
-  <path
-     d="M 2.906034,78.812027 V 59.742937 H 10.866419 L 12.581357,65.706827 Q 12.798924,66.47471 13.093279,67.58814 13.387634,68.688772 13.694787,69.904586 14.014738,71.120401 14.270699,72.233831 14.539458,73.334463 14.705833,74.102346 H 13.336442 Q 13.502817,73.334463 13.758778,72.233831 14.027537,71.120401 14.33469,69.904586 14.641843,68.688772 14.9234,67.58814 15.217755,66.47471 15.435322,65.706827 L 17.124664,59.742937 H 25.097847 V 78.812027 H 19.876244 V 71.440352 Q 19.876244,70.787652 19.90184,69.75101 19.940234,68.714368 19.978628,67.485756 20.017022,66.257143 20.042618,65.002935 20.081013,63.735928 20.081013,62.635296 H 20.682521 Q 20.413762,63.735928 20.093811,64.990137 19.77386,66.231547 19.453908,67.46016 19.146755,68.675974 18.865198,69.712616 18.583641,70.749258 18.378872,71.440352 L 16.16481,78.812027 H 11.864667 L 9.6122104,71.440352 Q 9.4074417,70.749258 9.1130866,69.712616 8.8187315,68.675974 8.4987804,67.46016 8.1788292,66.231547 7.84608,64.990137 7.5261288,63.735928 7.2445718,62.635296 H 7.9228683 Q 7.9228683,63.735928 7.9484644,65.002935 7.9868585,66.257143 8.0252526,67.485756 8.0636468,68.714368 8.0892429,69.75101 8.127637,70.787652 8.127637,71.440352 V 78.812027 Z M 35.803788,79.11918 Q 33.308169,79.11918 31.46525,78.248913 29.622331,77.365848 28.598488,75.77889 27.587442,74.179134 27.587442,72.029062 V 59.742937 H 32.757853 V 71.593929 Q 32.757853,72.476994 33.154592,73.168088 33.551332,73.846385 34.229628,74.243124 34.920723,74.639864 35.803788,74.639864 36.699651,74.639864 37.377948,74.255922 38.069042,73.859183 38.452984,73.180886 38.849723,72.489792 38.849723,71.593929 V 59.742937 H 44.020134 V 72.029062 Q 44.020134,74.179134 42.99629,75.77889 41.985244,77.365848 40.142326,78.248913 38.299407,79.11918 35.803788,79.11918 Z M 46.509729,78.812027 V 59.742937 H 51.833716 V 74.307115 H 60.050062 V 78.812027 Z M 59.250557,64.24785 V 59.742937 H 75.427288 V 64.24785 H 70.000917 V 78.812027 H 64.676929 V 64.24785 Z M 82.728946,59.742937 V 78.812027 H 77.404958 V 59.742937 Z M 85.218542,78.812027 V 59.742937 H 93.319705 Q 95.597757,59.742937 97.261504,60.562012 98.92525,61.368289 99.821113,62.865661 100.72977,64.350234 100.72977,66.397922 100.72977,68.432811 99.821113,69.930183 98.92525,71.427554 97.261504,72.246629 95.597757,73.052906 93.319705,73.052906 H 88.277275 V 68.675974 H 92.922966 Q 93.729243,68.675974 94.305155,68.394417 94.893865,68.11286 95.213816,67.600938 95.533767,67.089016 95.533767,66.397922 95.533767,65.694029 95.213816,65.194905 94.893865,64.682983 94.305155,64.401426 93.729243,64.119869 92.922966,64.119869 H 90.542529 V 78.812027 Z M 102.64345,78.812027 V 59.742937 H 107.96744 V 74.307115 H 116.18379 V 78.812027 Z M 120.78506,78.812027 V 72.310619 L 113.68215,59.742937 H 119.77402 L 122.5128,65.092521 Q 122.84555,65.758019 123.1527,66.423518 123.47265,67.089016 123.77981,67.754515 H 123.02472 Q 123.30628,67.089016 123.58784,66.423518 123.88219,65.758019 124.20214,65.092521 L 126.77455,59.742937 H 132.82803 L 125.92988,72.310619 V 78.812027 Z"
+     id="rect1"
+     width="135.46666"
+     height="135.46666"
+     x="0"
+     y="0"
+     ry="25.816393" />
+  <text
+     xml:space="preserve"
+     style="font-weight:900;font-size:22.5778px;font-family:'Adwaita Sans';-inkscape-font-specification:'Adwaita Sans Heavy';text-align:start;letter-spacing:0.610645px;word-spacing:0.0536035px;writing-mode:lr-tb;direction:ltr;text-anchor:start;white-space:pre;inline-size:187.582;display:inline;fill:#000000;fill-opacity:0.996078;stroke:#ffffff;stroke-width:6.12645;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+     x="5.5120716"
+     y="79.504478"
      id="text2"
-     style="font-weight:900;font-size:26.2104px;font-family:'Adwaita Sans';-inkscape-font-specification:'Adwaita Sans Heavy';letter-spacing:0.441907px;word-spacing:0.0387913px;fill-opacity:0.996078;stroke:#ffffff;stroke-width:4.43353;paint-order:stroke fill markers"
-     aria-label="MULTIPLY" />
+     transform="translate(3.8863386,-3.0535517)"><tspan
+       x="5.5120716"
+       y="79.504478"
+       id="tspan1">MULTIPLY</tspan></text>
 </svg>

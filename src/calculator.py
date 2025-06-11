@@ -77,7 +77,7 @@ class Calculator(Adw.ApplicationWindow):
         css_provider = Gtk.CssProvider()
         css_provider.load_from_data(b'''
             .calc-entry {
-                font-family: "Inter";
+                font-family: "Exo 2";
                 font-size: 90px;
             }
         ''')
