@@ -23,8 +23,8 @@ class SvgButton(Gtk.Button):
         self.label_value = label_value
 
         self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_content_width(70)
-        self.drawing_area.set_content_height(70)
+        self.drawing_area.set_content_width(80)
+        self.drawing_area.set_content_height(80)
         self.drawing_area.set_draw_func(self.on_draw)
 
         self.set_child(self.drawing_area)
@@ -32,14 +32,16 @@ class SvgButton(Gtk.Button):
 
     def on_draw(self, area, cr, width, height):
         handle = Rsvg.Handle.new_from_file(self.svg_path)
-        dimensions = handle.get_dimensions()
+        has_size, intrinsic_width, intrinsic_height = handle.get_intrinsic_size_in_pixels()
+        if not has_size:
+            intrinsic_width, intrinsic_height = 80, 80
 
-        scale_x = width / dimensions.width
-        scale_y = height / dimensions.height
+        scale_x = width / intrinsic_width
+        scale_y = height / intrinsic_height
         scale = min(scale_x, scale_y)
 
-        new_width = dimensions.width * scale
-        new_height = dimensions.height * scale
+        new_width = intrinsic_width * scale
+        new_height = intrinsic_height * scale
 
         offset_x = (width - new_width) / 2
         offset_y = (height - new_height) / 2
@@ -47,7 +49,12 @@ class SvgButton(Gtk.Button):
         cr.translate(offset_x, offset_y)
         cr.scale(scale, scale)
 
-        handle.render_cairo(cr)
+        rect = Rsvg.Rectangle()
+        rect.x = 0
+        rect.y = 0
+        rect.width = intrinsic_width
+        rect.height = intrinsic_height
+        handle.render_document(cr, rect)
 
 # SVG Logo at the bottom
 class SvgLogo(Gtk.DrawingArea):
@@ -60,14 +67,16 @@ class SvgLogo(Gtk.DrawingArea):
 
     def on_draw(self, area, cr, width, height):
         handle = Rsvg.Handle.new_from_file(self.svg_path)
-        dimensions = handle.get_dimensions()
+        has_size, intrinsic_width, intrinsic_height = handle.get_intrinsic_size_in_pixels()
+        if not has_size:
+            intrinsic_width, intrinsic_height = 150, 100
 
-        scale_x = width / dimensions.width
-        scale_y = height / dimensions.height
+        scale_x = width / intrinsic_width
+        scale_y = height / intrinsic_height
         scale = min(scale_x, scale_y)
 
-        new_width = dimensions.width * scale
-        new_height = dimensions.height * scale
+        new_width = intrinsic_width * scale
+        new_height = intrinsic_height * scale
 
         offset_x = (width - new_width) / 2
         offset_y = (height - new_height) / 2
@@ -75,7 +84,12 @@ class SvgLogo(Gtk.DrawingArea):
         cr.translate(offset_x, offset_y)
         cr.scale(scale, scale)
 
-        handle.render_cairo(cr)
+        rect = Rsvg.Rectangle()
+        rect.x = 0
+        rect.y = 0
+        rect.width = intrinsic_width
+        rect.height = intrinsic_height
+        handle.render_document(cr, rect)
 
 # Drawing the window
 class Calculator(Adw.ApplicationWindow):
@@ -142,7 +156,7 @@ class Calculator(Adw.ApplicationWindow):
         css_provider.load_from_data(b'''
             .calc-entry {
                 font-family: "Inter";
-                font-size: 60px;
+                font-size: 90px;
             }
         ''')
         Gtk.StyleContext.add_provider_for_display(
@@ -186,7 +200,7 @@ class Calculator(Adw.ApplicationWindow):
                 row += 1
 
         # Logo
-        logo = SvgLogo(os.path.join(ICONS_DIR, "logo.svg"), size=80)
+        logo = SvgLogo(os.path.join(ICONS_DIR, "logo.svg"), size=100)
         logo.set_halign(Gtk.Align.CENTER)
         logo.set_valign(Gtk.Align.CENTER)
         logo.set_margin_start(10)
@@ -219,15 +233,10 @@ class Calculator(Adw.ApplicationWindow):
         self.entry.set_text("")
     #About
     def on_about_clicked(self, button):
-        about = Gtk.Dialog(title="About", transient_for=self, modal=True)
-        about.set_default_size(200, 300)
+        about = Adw.Window(transient_for=self, modal=True)
+        about.set_default_size(300, 400)
+        about.set_title("About")
         about.set_decorated(True)
-        header_bar = Adw.HeaderBar()
-        header_bar.set_title_widget(Gtk.Label(label="About"))
-        header_bar.set_show_end_title_buttons(True)
-        about.set_titlebar(header_bar)
-
-        content = about.get_content_area()
 
         vbox = Gtk.Box(
             orientation=Gtk.Orientation.VERTICAL,
@@ -237,12 +246,13 @@ class Calculator(Adw.ApplicationWindow):
             margin_start=20,
             margin_end=20
         )
-        content.append(vbox)
-        logo = SvgLogo(os.path.join(ICONS_DIR, "logo.svg"), size=200)
+
+        logo = SvgLogo(os.path.join(ICONS_DIR, "logo.svg"), size=300)
         logo.set_halign(Gtk.Align.CENTER)
+        logo.set_visible(True)
         vbox.append(logo)
 
-        label = Gtk.Label(label="InterCalculator\nVersion 0.3\nBy Nilton Perim")
+        label = Gtk.Label(label="InterCalculator\nVersion 1.0\nBy Nilton Perim")
         label.set_justify(Gtk.Justification.CENTER)
         vbox.append(label)
 
@@ -250,7 +260,8 @@ class Calculator(Adw.ApplicationWindow):
         button.connect("clicked", lambda btn: about.close())
         vbox.append(button)
 
-        about.show()
+        about.set_content(vbox)
+        about.present()
 
     def on_toggle_mode(self, button):
         style_manager = Adw.StyleManager.get_default()
@@ -261,7 +272,7 @@ class Calculator(Adw.ApplicationWindow):
 
 class CalculatorApp(Adw.Application):
     def __init__(self):
-        super().__init__(application_id="org.intertech.calculator")
+        super().__init__(application_id="com.intertech.calculator")
 
     def do_activate(self, app=None):
         win = Calculator(self)
