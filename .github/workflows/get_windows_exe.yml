@@ -7,7 +7,7 @@ on:
 
 jobs:
   nuitka-qt-build:
-    if: github.ref_name == 'qtversion'
+    if: startsWith(github.ref, 'refs/heads/qtversion')
     runs-on: windows-latest
     steps:
       - name: Checkout repository
