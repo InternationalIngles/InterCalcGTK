@@ -1,10 +1,10 @@
 name: Build InterCalc
 
-
 on:
   push:
     branches:
       - qtversion
+      - main
 
 jobs:
   nuitka-qt-build:
@@ -34,12 +34,6 @@ jobs:
           name: Qt-Windows-nuitka
           path: dist/
 
-on:
-  push:
-    branches:
-      - main
-
-jobs:
   pyinstaller-build:
     if: startsWith(github.ref, 'refs/heads/main')
     runs-on: ubuntu-latest
