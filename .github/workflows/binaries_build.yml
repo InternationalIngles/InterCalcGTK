@@ -33,13 +33,6 @@ jobs:
           script-name: src/main.py
           mode: onefile
           plugin-enable: gi
-          module-enable: cairo
-          module-enable: gi._gi
-          module-enable: gi._error
-          module-enable: gi._option
-          module-enable: gi._signalhelper
-          module-enable: gi._propertyhelper
-          module-enable: gi._constants
           module-enable: gi._enum
           output-dir: dist
           include-data-dir: src/icons=icons
