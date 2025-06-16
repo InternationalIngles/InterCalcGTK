@@ -24,7 +24,7 @@ jobs:
           sudo apt install -y libcairo2-dev libgirepository-2.0-dev
           python -m pip install --upgrade pip
           pip install --upgrade pip setuptools wheel
-          pip install pyinstaller PyGObject pycairo
+          pip install PyGObject pycairo
 
       - name: Build Qt GUI with Nuitka
         uses: Nuitka/Nuitka-Action@main
@@ -32,6 +32,7 @@ jobs:
           nuitka-version: main
           script-name: src/main.py
           mode: onefile
+          plugin-enable: gi
           include-module: cairo
           output-dir: dist
           include-data-dir: src/icons=icons
