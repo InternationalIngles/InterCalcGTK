@@ -6,9 +6,8 @@ on:
       - main
 
 jobs:
-
-  pyinstaller-build:
-    if: startsWith(github.ref, 'refs/heads/main')
+  nuitka-qt-build:
+    if: startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/heads/main')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -18,7 +17,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-
+          
       - name: Install dependencies
         run: |
           sudo apt update
@@ -27,12 +26,19 @@ jobs:
           pip install --upgrade pip setuptools wheel
           pip install pyinstaller PyGObject pycairo
 
-      - name: Package Application with PyInstaller
-        run: |
-          pyinstaller main.spec
+      - name: Build Qt GUI with Nuitka
+        uses: Nuitka/Nuitka-Action@main
+        with:
+          nuitka-version: main
+          script-name: src/main.py
+          mode: onefile
+          include-module: cairo
+          output-dir: dist
+          include-data-dir: src/icons=icons
+          windows-console-mode: disable
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Linux-exe
-          path: dist/*
+          name: GTK-Linux-nuitka
+          path: dist/
