@@ -35,7 +35,6 @@ jobs:
           plugin-enable: gi
           module-enable: cairo
           module-enable: gi._gi
-          module-enable: gi._gi_cairo
           module-enable: gi._error
           module-enable: gi._option
           module-enable: gi._signalhelper
