@@ -41,4 +41,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: GTK-Linux-nuitka
-          path: dist/
+          path: dist/main.bin
