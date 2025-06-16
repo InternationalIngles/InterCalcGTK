@@ -7,10 +7,7 @@ import os
 from .button_grid import ButtonGrid
 from .about_dialog import AboutDialog
 
-try:
-    from ..svg_logo import SvgLogo
-except (ImportError, SystemError):
-    from svg_logo import SvgLogo
+from svg_logo import SvgLogo
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ICONS_DIR = os.path.join(BASE_DIR, "..", "icons")
@@ -18,7 +15,7 @@ ICONS_DIR = os.path.join(BASE_DIR, "..", "icons")
 class Calculator(Adw.ApplicationWindow):
     def __init__(self, app):
         super().__init__(application=app)
-        self.set_title("InterCalc")
+        self.set_title("InterCalculator")
         self.set_default_size(250, 300)
         self.dark_mode = False
 
