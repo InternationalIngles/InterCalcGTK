@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  nuitka-qt-build:
+  nuitka-gtk-build:
     if: startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/heads/main')
     runs-on: ubuntu-latest
     steps:
@@ -33,7 +33,15 @@ jobs:
           script-name: src/main.py
           mode: onefile
           plugin-enable: gi
-          include-module: cairo
+          module-enable: cairo
+          module-enable: gi._gi
+          module-enable: gi._gi_cairo
+          module-enable: gi._error
+          module-enable: gi._option
+          module-enable: gi._signalhelper
+          module-enable: gi._propertyhelper
+          module-enable: gi._constants
+          module-enable: gi._enum
           output-dir: dist
           include-data-dir: src/icons=icons
           windows-console-mode: disable
