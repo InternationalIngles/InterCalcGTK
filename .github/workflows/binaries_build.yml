@@ -32,9 +32,7 @@ jobs:
           nuitka-version: main
           script-name: src/main.py
           mode: onefile
-          plugin-enable: gi
-          include-module: gi._enum
-          include-module: cairo
+          include-module: gi._enum,cairo
           output-dir: dist
           include-data-dir: src/icons=icons
           windows-console-mode: disable
