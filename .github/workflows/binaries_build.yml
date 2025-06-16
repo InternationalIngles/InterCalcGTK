@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y libcairo2-dev libgirepository-2.0-dev
+          sudo apt install -y libcairo2-dev libgirepository-2.0-dev libadwaita-1-dev
           python -m pip install --upgrade pip
           pip install --upgrade pip setuptools wheel
           pip install PyGObject pycairo
@@ -32,7 +32,7 @@ jobs:
           nuitka-version: main
           script-name: src/main.py
           mode: onefile
-          include-module: gi._enum,cairo
+          include-module: gi._enum,cairo,gi.repository.Adw
           output-dir: dist
           include-data-dir: src/icons=icons
           windows-console-mode: disable
