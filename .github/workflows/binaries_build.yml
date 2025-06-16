@@ -26,13 +26,13 @@ jobs:
           pip install --upgrade pip setuptools wheel
           pip install PyGObject pycairo
 
-      - name: Build Qt GUI with Nuitka
+      - name: Build GTK GUI with Nuitka
         uses: Nuitka/Nuitka-Action@main
         with:
           nuitka-version: main
           script-name: src/main.py
           mode: onefile
-          include-module: gi._enum,cairo,gi.repository.Adw
+          include-module: gi._enum,cairo
           output-dir: dist
           include-data-dir: src/icons=icons
           windows-console-mode: disable
