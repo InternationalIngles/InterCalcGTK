@@ -8,20 +8,22 @@ class SvgButton(Gtk.Button):
         super().__init__()
         self.svg_path = svg_path
         self.label_value = label_value
+        
+        # Pre-load the SVG handle to avoid I/O on every draw
+        self.handle = Rsvg.Handle.new_from_file(self.svg_path)
 
         self.drawing_area = Gtk.DrawingArea()
-        self.drawing_area.set_content_width(80)
-        self.drawing_area.set_content_height(80)
+        self.drawing_area.set_content_width(60)
+        self.drawing_area.set_content_height(60)
         self.drawing_area.set_draw_func(self.on_draw)
 
         self.set_child(self.drawing_area)
         self.connect("clicked", callback)
 
     def on_draw(self, area, cr, width, height):
-        handle = Rsvg.Handle.new_from_file(self.svg_path)
-        has_size, intrinsic_width, intrinsic_height = handle.get_intrinsic_size_in_pixels()
+        has_size, intrinsic_width, intrinsic_height = self.handle.get_intrinsic_size_in_pixels()
         if not has_size:
-            intrinsic_width, intrinsic_height = 80, 80
+            intrinsic_width, intrinsic_height = 60, 60
 
         scale_x = width / intrinsic_width
         scale_y = height / intrinsic_height
@@ -41,4 +43,4 @@ class SvgButton(Gtk.Button):
         rect.y = 0
         rect.width = intrinsic_width
         rect.height = intrinsic_height
-        handle.render_document(cr, rect)
+        self.handle.render_document(cr, rect)

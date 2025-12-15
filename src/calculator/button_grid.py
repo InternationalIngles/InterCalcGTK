@@ -4,8 +4,9 @@ from gi.repository import Gtk
 
 import os
 
-from svg_button import SvgButton
-from svg_logo import SvgLogo
+from .widgets.svg_button import SvgButton
+from .widgets.svg_logo import SvgLogo
+from .utils import safe_eval
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ICONS_DIR = os.path.join(BASE_DIR, "..", "icons")
@@ -63,12 +64,18 @@ class ButtonGrid(Gtk.Grid):
 
     def on_button_clicked(self, button):
         current = self.calculator.entry.get_text()
+        if current == "Error":
+            current = ""
         label = button.label_value
         self.calculator.entry.set_text(current + label)
 
     def on_equal_clicked(self, button):
         try:
-            result = eval(self.calculator.entry.get_text())
+            expression = self.calculator.entry.get_text()
+            result = safe_eval(expression)
+            # Handle float display (remove .0 if integer)
+            if isinstance(result, float) and result.is_integer():
+                result = int(result)
             self.calculator.entry.set_text(str(result))
         except Exception:
             self.calculator.entry.set_text("Error")

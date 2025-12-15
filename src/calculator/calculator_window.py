@@ -7,7 +7,7 @@ import os
 from .button_grid import ButtonGrid
 from .about_dialog import AboutDialog
 
-from svg_logo import SvgLogo
+from .widgets.svg_logo import SvgLogo
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ICONS_DIR = os.path.join(BASE_DIR, "..", "icons")
@@ -17,6 +17,7 @@ class Calculator(Adw.ApplicationWindow):
         super().__init__(application=app)
         self.set_title("InterCalculator")
         self.set_default_size(250, 300)
+        self.set_resizable(True)
         self.dark_mode = False
 
         outer_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
@@ -70,7 +71,7 @@ class Calculator(Adw.ApplicationWindow):
         css_provider.load_from_data(b'''
             .calc-entry {
                 font-family: "Exo 2";
-                font-size: 90px;
+                font-size: 45px;
             }
         ''')
         Gtk.StyleContext.add_provider_for_display(

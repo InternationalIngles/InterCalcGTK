@@ -4,7 +4,7 @@ gi.require_version("Adw", "1")
 from gi.repository import Gtk, Adw
 import os
 
-from svg_logo import SvgLogo
+from .widgets.svg_logo import SvgLogo
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ICONS_DIR = os.path.join(BASE_DIR, "..", "icons")

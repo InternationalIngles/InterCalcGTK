@@ -9,11 +9,14 @@ class SvgLogo(Gtk.DrawingArea):
         self.svg_path = svg_path
         self.set_content_width(size)
         self.set_content_height(size)
+        
+        # Pre-load the SVG handle
+        self.handle = Rsvg.Handle.new_from_file(self.svg_path)
+        
         self.set_draw_func(self.on_draw)
 
     def on_draw(self, area, cr, width, height):
-        handle = Rsvg.Handle.new_from_file(self.svg_path)
-        has_size, intrinsic_width, intrinsic_height = handle.get_intrinsic_size_in_pixels()
+        has_size, intrinsic_width, intrinsic_height = self.handle.get_intrinsic_size_in_pixels()
         if not has_size:
             intrinsic_width, intrinsic_height = 150, 100
 
@@ -35,4 +38,4 @@ class SvgLogo(Gtk.DrawingArea):
         rect.y = 0
         rect.width = intrinsic_width
         rect.height = intrinsic_height
-        handle.render_document(cr, rect)
+        self.handle.render_document(cr, rect)
