@@ -1,0 +1,10 @@
+[package]
+name = "intercalc-gtk"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+gtk4 = "0.9"
+libadwaita = "0.7"
+evalexpr = "11.3"
+anyhow = "1.0"
