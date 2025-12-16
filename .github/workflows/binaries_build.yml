@@ -61,14 +61,13 @@ jobs:
             mingw-w64-x86_64-python-gobject
             mingw-w64-x86_64-python-pip
             mingw-w64-x86_64-python-cairo
-            mingw-w64-x86_64-nuitka
             mingw-w64-x86_64-cc
           msystem: MINGW64
 
       - name: Build GTK GUI with Nuitka (Windows)
         shell: msys2 {0}
         run: |
-          python -m pip install setuptools wheel
+          python -m pip install setuptools wheel nuitka
           python -m nuitka --onefile --enable-plugin=gi --include-module=gi._enum --include-module=cairo --include-data-dir=src/icons=icons --windows-console-mode=disable --output-dir=dist src/main.py
 
       - name: Upload artifact
