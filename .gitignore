@@ -9,3 +9,9 @@
 InterCalculator.zip
 InterCalculator
 main.bin
+
+
+# Added by cargo
+
+/target
+/python_original
