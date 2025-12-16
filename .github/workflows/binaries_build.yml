@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  nuitka-gtk-build:
-    if: startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/heads/main')
+  nuitka-gtk-build-linux:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -32,6 +32,7 @@ jobs:
           nuitka-version: main
           script-name: src/main.py
           mode: onefile
+          enable-plugins: gi
           include-module: gi._enum,cairo
           output-dir: dist
           include-data-dir: src/icons=icons
@@ -42,3 +43,36 @@ jobs:
         with:
           name: GTK-Linux-nuitka
           path: dist/main.bin
+
+  nuitka-gtk-build-windows:
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: >-
+            mingw-w64-x86_64-gtk4
+            mingw-w64-x86_64-libadwaita
+            mingw-w64-x86_64-python-gobject
+            mingw-w64-x86_64-python-pip
+            mingw-w64-x86_64-python-cairo
+            mingw-w64-x86_64-nuitka
+            mingw-w64-x86_64-cc
+          msystem: MINGW64
+
+      - name: Build GTK GUI with Nuitka (Windows)
+        shell: msys2 {0}
+        run: |
+          python -m pip install setuptools wheel
+          python -m nuitka --onefile --enable-plugin=gi --include-module=gi._enum --include-module=cairo --include-data-dir=src/icons=icons --windows-console-mode=disable --output-dir=dist src/main.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GTK-Windows-nuitka
+          path: dist/main.exe
